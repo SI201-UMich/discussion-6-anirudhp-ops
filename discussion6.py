@@ -91,7 +91,16 @@ class HorseRaces:
             EXAMPLE: ('Teio Sho', 14.8)
         '''
 
-        
+        fastest_race = None
+        fastest_time = 999.9
+        if horse not in self.race_dict: 
+            return (fastest_race, fastest_time)
+        horse_information = self.race_dict[horse_information]
+        for race, time in horse_information.items():
+            if time < fastest_time: 
+                fastest_time = time
+                fastest_race = race
+        return (fastest_race, fastest_time) 
 
         ##pass
 
