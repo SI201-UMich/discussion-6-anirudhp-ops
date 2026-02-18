@@ -1,3 +1,7 @@
+## Anirudh Parasrampuria 
+## diss 6
+## 2/18/26
+
 import unittest
 import os
 import csv
@@ -39,6 +43,17 @@ class HorseRaces:
 ##### TASK 1
 ###############################################################################
     def load_results(self, table):
+        header = table[0]; 
+        result_dict = {}; 
+        for row in table[1:]:
+            horse = row[0]
+            horse_information = {}
+            for i in range(1, len(row)): 
+                horse_information[header[i]] = float(row[i])
+            result_dict[horse] = horse_information
+        return result_dict
+
+     
         '''
         Given the processed CSV (as a list of lists), populate a nested dictionary with the horse information.
 
@@ -57,7 +72,7 @@ class HorseRaces:
             inner keys are (str) races, inner values are (int) race times
             EXAMPLE: {'Special Week': {'Tenno Sho Fall': 16.5, 'Tenno Sho Spring': 16.3, 'Teio Sho': 17.0}}
         '''
-        pass
+       ## pass
 
 ###############################################################################
 ##### TASK 2
@@ -75,7 +90,10 @@ class HorseRaces:
             tuple of fastest race name and the time
             EXAMPLE: ('Teio Sho', 14.8)
         '''
-        pass
+
+        
+
+        ##pass
 
 ###############################################################################
 ##### TASK 3
