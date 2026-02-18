@@ -43,16 +43,6 @@ class HorseRaces:
 ##### TASK 1
 ###############################################################################
     def load_results(self, table):
-        header = table[0]; 
-        result_dict = {}; 
-        for row in table[1:]:
-            horse = row[0]
-            horse_information = {}
-            for i in range(1, len(row)): 
-                horse_information[header[i]] = float(row[i])
-            result_dict[horse] = horse_information
-        return result_dict
-
      
         '''
         Given the processed CSV (as a list of lists), populate a nested dictionary with the horse information.
@@ -72,6 +62,16 @@ class HorseRaces:
             inner keys are (str) races, inner values are (int) race times
             EXAMPLE: {'Special Week': {'Tenno Sho Fall': 16.5, 'Tenno Sho Spring': 16.3, 'Teio Sho': 17.0}}
         '''
+
+        header = table[0]; 
+        result_dict = {}; 
+        for row in table[1:]:
+            horse = row[0]
+            horse_information = {}
+            for i in range(1, len(row)): 
+                horse_information[header[i]] = float(row[i])
+            result_dict[horse] = horse_information
+        return result_dict
        ## pass
 
 ###############################################################################
@@ -95,7 +95,9 @@ class HorseRaces:
         fastest_time = 999.9
         if horse not in self.race_dict: 
             return (fastest_race, fastest_time)
-        horse_information = self.race_dict[horse_information]
+        
+        horse_information = self.race_dict[horse]
+
         for race, time in horse_information.items():
             if time < fastest_time: 
                 fastest_time = time
@@ -110,10 +112,6 @@ class HorseRaces:
         
     def horse_personal_best(self):
         
-        result_dict = {}
-        for horse in self.race_dict: 
-            result_dict[horse] = self.horse_fastest_race(horse)
-        return result_dict
 
         '''
         Calculate the fastest race and time for each horse.
@@ -123,7 +121,21 @@ class HorseRaces:
             EXAMPLE: {"Oguri Cap": ("Tenno Sho Fall", 16.6), "Mejiro McQueen": ("Tenno Sho Fall", 16.1)}
         '''
        
-       
+        result_dict = {}
+
+        for horse, races in self.race_dict.items(): 
+
+            fastest_time = 999.0
+            fastest_race = None
+
+            for race, time in races.items():
+                if time < fastest_time:
+                    fastest_race = race
+                    fastest_time = time
+                    
+            result_dict[horse] = (fastest_race, fastest_time)
+
+        return result_dict
        
        ##pass
 
@@ -133,14 +145,6 @@ class HorseRaces:
 
     def get_average_time(self):
 
-        average_dict = {}
-        for horse, races in self.race_dict: 
-            sum = 0.0
-            for time in races.items():
-                sum += time 
-            average = sum / len(races) 
-            average_dict[horse] = average
-        return average_dict
 
         '''
         Calculate the average race time for each horse.
@@ -149,7 +153,16 @@ class HorseRaces:
             A dictionary with each horse and their average time.
             EXAMPLE: {'Gold Ship': 16.5, 'Daiwa Scarlet': 17.2}
         '''
-        pass
+
+        average_dict = {}
+        for horse, races in self.race_dict.items(): 
+            sum = 0.0
+            for _, time in races.items():
+                sum += time 
+            average = sum / len(races) 
+            average_dict[horse] = average
+        return average_dict
+
 
 ###############################################################################
 ##### DO NOT MODIFY THE UNIT TESTS BELOW!
